@@ -7,6 +7,7 @@ const port = process.env.SERVER_PORT;
 
 app.use(cors());
 
+app.use('/images', express.static(__dirname + '/public/images'));
 app.use('/category', category);
 
 app.listen(port);

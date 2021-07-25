@@ -1,7 +1,13 @@
 {
   "name": "pickyserver",
   "version": "1.0.0",
-  "main": "app.js",
+  "scripts": {
+    "dev": "npx nodemon index.js"
+  },
+  "main": "index.js",
   "author": "Brendon Mota",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
 }

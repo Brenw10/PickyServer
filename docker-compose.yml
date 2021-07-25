@@ -1,0 +1,32 @@
+version: '3'
+services:
+  nodejs:
+    container_name: picky_nodejs
+    build: ./
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    volumes:
+      - ./:/home/app
+      - /home/app/node_modules
+    env_file:
+      - .env
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    environment:
+      - WAIT_HOSTS=mongodb:${MONGO_PORT}
+      - CHOKIDAR_USEPOLLING=true
+  mongodb:
+    container_name: picky_mongodb
+    image: mongo
+    ports:
+      - "${MONGO_PORT}:${MONGO_PORT}"
+    volumes:  
+      - './data:/data/db'
+    env_file:
+      - .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    command: mongod --port ${MONGO_PORT}

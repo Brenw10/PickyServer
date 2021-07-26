@@ -4,7 +4,7 @@ const product = require('../entities/product');
 const router = express.Router();
 
 router.get('/:_id/product/:name', (req, res) =>
-  product.search(req.params._id, req.params.name)
+  product.getByName(req.params._id, req.params.name)
     .then(result => res.send(result))
     .catch(err => res.status(400).send(err))
 );

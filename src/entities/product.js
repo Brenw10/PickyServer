@@ -5,7 +5,7 @@ function getDistinctCity() {
   return store.find().distinct('city');
 }
 
-function search(_id, name) {
+function getByName(_id, name) {
   return store.aggregate([
     { $match: { _id: mongoose.Types.ObjectId(_id) } },
     { $unwind: '$products' },
@@ -16,5 +16,5 @@ function search(_id, name) {
 
 module.exports = {
   getDistinctCity,
-  search,
+  getByName,
 };

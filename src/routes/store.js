@@ -1,10 +1,10 @@
 const express = require('express');
-const city = require('../entities/city');
+const product = require('../entities/product');
 
 const router = express.Router();
 
-router.get('/', (_, res) =>
-  city.getAll()
+router.get('/product/city', (_, res) =>
+  product.getDistinctCity()
     .then(result => res.send(result))
     .catch(err => res.status(400).send(err))
 );

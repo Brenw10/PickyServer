@@ -1,10 +1,6 @@
 const store = require('../models/store');
 const mongoose = require('mongoose');
 
-function getDistinctCity() {
-  return store.find().distinct('city');
-}
-
 function getByName(_id, name) {
   return store.aggregate([
     { $match: { _id: mongoose.Types.ObjectId(_id) } },
@@ -15,6 +11,5 @@ function getByName(_id, name) {
 }
 
 module.exports = {
-  getDistinctCity,
   getByName,
 };

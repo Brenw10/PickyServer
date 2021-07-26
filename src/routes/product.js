@@ -9,11 +9,5 @@ router.get('/:_id/product/:name', (req, res) =>
     .catch(err => res.status(400).send(err))
 );
 
-router.get('/product/city', (_, res) =>
-  product.getDistinctCity()
-    .then(result => res.send(result))
-    .catch(err => res.status(400).send(err))
-);
-
 
 module.exports = router;

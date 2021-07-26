@@ -12,8 +12,13 @@ function get(_id) {
   return store.find({ _id });
 }
 
+function getDistinctCity() {
+  return store.find().distinct('city');
+}
+
 module.exports = {
   getAllFromCity,
   get,
   getByName,
+  getDistinctCity,
 };

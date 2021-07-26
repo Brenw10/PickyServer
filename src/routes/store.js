@@ -4,8 +4,8 @@ const store = require('../entities/store');
 
 const router = express.Router();
 
-router.get('/', (_, res) =>
-  store.getAll()
+router.get('/city/:city', (req, res) =>
+  store.getAllFromCity(req.params.city)
     .then(result => res.send(result))
     .catch(err => res.status(400).send(err))
 );

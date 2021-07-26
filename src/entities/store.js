@@ -1,7 +1,7 @@
 const store = require('../models/store');
 
-function getAll() {
-  return store.find();
+function getAllFromCity(city) {
+  return store.find({ city });
 }
 
 function get(_id) {
@@ -9,6 +9,6 @@ function get(_id) {
 }
 
 module.exports = {
-  getAll,
+  getAllFromCity,
   get,
 };

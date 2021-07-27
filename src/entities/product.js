@@ -7,7 +7,7 @@ function getByName(_id, name) {
     { $unwind: '$products' },
     { $match: { 'products.name': { $regex: new RegExp(name, 'i') } } },
     { $group: { _id: '$_id', products: { $push: '$products' } } },
-  ]);
+  ]).then(result => result[0].products);
 }
 
 module.exports = {

@@ -13,7 +13,10 @@ function get(_id) {
 }
 
 function getDistinctCity() {
-  return store.find().distinct('city');
+  return store.aggregate([
+    { $group: { _id: "$city" } },
+    { $project: { name: '$_id' } },
+  ]);
 }
 
 module.exports = {

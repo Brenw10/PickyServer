@@ -10,6 +10,16 @@ function getByName(_id, name) {
   ]).then(result => result[0].products);
 }
 
+function search(query, category) {
+  return store.aggregate([
+    { $match: query },
+    { $unwind: '$products' },
+    { $match: { 'products.category': mongoose.Types.ObjectId(category) } },
+    { $group: { _id: '$products.category', products: { $push: '$products' } } },
+  ]).then(result => result[0].products);
+}
+
 module.exports = {
   getByName,
+  search,
 };

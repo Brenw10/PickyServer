@@ -6,7 +6,7 @@ function search(query) {
 }
 
 function get(_id) {
-  return store.find({ _id });
+  return store.findOne({ _id });
 }
 
 function getDistinctCity() {

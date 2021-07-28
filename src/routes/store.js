@@ -21,7 +21,7 @@ router.get('/store/:_id/product/search',
 router.get('/store/search',
   celebrate({
     [Segments.QUERY]: Joi.object({
-      name: Joi.string(),
+      name: Joi.string().empty(''),
       city: Joi.string(),
     }),
   }),

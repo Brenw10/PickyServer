@@ -1,33 +1,25 @@
 const express = require('express');
 const store = require('../entities/store');
-const product = require('../routes/product');
+const product = require('../entities/product');
 
 const router = express.Router();
 
-router.get('/city', (_, res) =>
-  store.getDistinctCity()
+router.get('/store/search', (req, res) =>
+  store.search(req.query)
     .then(result => res.send(result))
     .catch(err => res.status(400).send(err))
 );
 
-router.get('/city/:city', (req, res) =>
-  store.getAllFromCity(req.params.city)
+router.get('/store/:_id/product/search', (req, res) =>
+  product.getByName(req.params._id, req.query.name)
     .then(result => res.send(result))
     .catch(err => res.status(400).send(err))
 );
 
-router.get('/name/:name', (req, res) =>
-  store.getByName(req.params.name)
-    .then(result => res.send(result))
-    .catch(err => res.status(400).send(err))
-);
-
-router.get('/:_id', (req, res) =>
+router.get('/store/:_id', (req, res) =>
   store.get(req.params._id)
     .then(result => res.send(result))
     .catch(err => res.status(400).send(err))
 );
-
-router.use(product);
 
 module.exports = router;

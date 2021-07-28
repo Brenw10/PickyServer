@@ -1,11 +1,8 @@
 const store = require('../models/store');
 
-function getAllFromCity(city) {
-  return store.find({ city });
-}
-
-function getByName(name) {
-  return store.find({ name: { $regex: new RegExp(name, 'i') } });
+function search(query) {
+  if (query.name) query.name = { $regex: new RegExp(query.name, 'i') };
+  return store.find(query);
 }
 
 function get(_id) {
@@ -20,8 +17,7 @@ function getDistinctCity() {
 }
 
 module.exports = {
-  getAllFromCity,
   get,
-  getByName,
   getDistinctCity,
+  search,
 };

@@ -1,25 +1,27 @@
 const store = require('../models/store');
 const mongoose = require('mongoose');
 
-function getByName(_id, name) {
+function searchByStore(_id, query) {
+  if (query['products.name']) query['products.name'] = { $regex: query['products.name'], $options: 'i' }
   return store.aggregate([
     { $match: { _id: mongoose.Types.ObjectId(_id) } },
     { $unwind: '$products' },
-    { $match: { 'products.name': { $regex: new RegExp(name, 'i') } } },
+    { $match: query },
     { $group: { _id: '$_id', products: { $push: '$products' } } },
   ]).then(result => result[0].products);
 }
 
-function search(query, category) {
+function searchByCategory(category, query) {
+  if (query['products.name']) query['products.name'] = { $regex: query['products.name'], $options: 'i' }
   return store.aggregate([
-    { $match: query },
     { $unwind: '$products' },
+    { $match: query },
     { $match: { 'products.category': mongoose.Types.ObjectId(category) } },
     { $group: { _id: '$products.category', products: { $push: '$products' } } },
   ]).then(result => result[0].products);
 }
 
 module.exports = {
-  getByName,
-  search,
+  searchByStore,
+  searchByCategory,
 };

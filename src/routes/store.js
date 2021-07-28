@@ -1,8 +1,22 @@
 const express = require('express');
 const store = require('../entities/store');
+const product = require('../entities/product');
 const { celebrate, Joi, errors, Segments } = require('celebrate');
 
 const router = express.Router();
+
+router.get('/store/:_id/product/search',
+  celebrate({
+    [Segments.QUERY]: Joi.object({
+      'products.name': Joi.string(),
+      city: Joi.string(),
+    }),
+  }),
+  (req, res) =>
+    product.searchByStore(req.params._id, req.query)
+      .then(result => res.send(result))
+      .catch(err => res.status(400).send(err))
+);
 
 router.get('/store/search',
   celebrate({

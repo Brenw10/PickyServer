@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 
 function searchByStore(_id, query) {
   query = { ...query, 'products.name': { $regex: query['products.name'] || '', $options: 'i' } };
-  console.log(query)
   return store.aggregate([
     { $unwind: '$products' },
     { $match: { _id: mongoose.Types.ObjectId(_id) } },

@@ -1,7 +1,7 @@
 const store = require('../models/store');
 
 function search(query) {
-  if (query.name) query.name = { $regex: new RegExp(query.name, 'i') };
+  query = { ...query, name: { $regex: query.name || '', $options: 'i' } };
   return store.find(query);
 }
 

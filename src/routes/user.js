@@ -1,4 +1,5 @@
 const express = require('express');
+const auth = require('../middleware/auth');
 const user = require('../services/user');
 const { celebrate, Joi, errors, Segments } = require('celebrate');
 
@@ -17,6 +18,8 @@ router.post('/user',
       .then(result => res.send(result))
       .catch(err => res.status(400).send(err))
 );
+
+router.get('/user', auth, (_, res) => res.send(res.locals.user));
 
 router.use(errors());
 

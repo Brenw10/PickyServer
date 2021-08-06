@@ -5,6 +5,7 @@ mongoose.connect(
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
     auth: { authSource: "admin" },
     user: process.env.MONGO_INITDB_ROOT_USERNAME,
     pass: process.env.MONGO_INITDB_ROOT_PASSWORD,

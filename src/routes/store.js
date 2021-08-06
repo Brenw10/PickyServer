@@ -1,6 +1,6 @@
 const express = require('express');
-const store = require('../entities/store');
-const product = require('../entities/product');
+const store = require('../services/store');
+const product = require('../services/product');
 const { celebrate, Joi, errors, Segments } = require('celebrate');
 
 const router = express.Router();

@@ -1,5 +1,5 @@
 const express = require('express');
-const product = require('../entities/product');
+const product = require('../services/product');
 const { celebrate, Joi, errors, Segments } = require('celebrate');
 
 const router = express.Router();

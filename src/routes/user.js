@@ -19,7 +19,7 @@ router.post('/user',
       .catch(err => res.status(400).send(err))
 );
 
-router.get('/user', auth, (_, res) => res.send(res.locals.user));
+router.get('/user/myself', auth, (_, res) => res.send(res.locals.user));
 
 router.use(errors());
 

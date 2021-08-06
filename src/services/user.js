@@ -14,7 +14,17 @@ async function authUser(email, password) {
   return jwt.sign({ _id: currentUser._id }, process.env.TOKEN_KEY, { expiresIn: process.env.TOKEN_EXPIRE });
 }
 
+function getByToken(token) {
+  try {
+    const { _id } = jwt.verify(token, process.env.TOKEN_KEY);
+    return user.findOne({ _id });
+  } catch {
+    return Promise.reject('Invalid User Information');
+  }
+}
+
 module.exports = {
   create,
   authUser,
+  getByToken,
 };

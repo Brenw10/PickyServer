@@ -17,8 +17,7 @@ const schema = new mongoose.Schema({
 });
 
 schema.pre('save', function (next) {
-  const user = this;
-  user.password = hash.encrypt(METHOD.SHA_256, user.password);
+  this.password = hash.encrypt(METHOD.SHA_256, this.password);
   next();
 });
 

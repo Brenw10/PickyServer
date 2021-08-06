@@ -5,7 +5,8 @@ const router = express.Router();
 
 router.use(async function (req, res, next) {
   try {
-    const currentUser = await user.getByToken(req.headers.authorization)
+    const currentUser = await user.getByToken(req.headers.authorization);
+    if (!currentUser) throw 'Inexistent User';
     res.locals.user = currentUser;
     next();
   } catch (err) {

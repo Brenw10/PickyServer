@@ -12,7 +12,7 @@ router.post('/login',
     }),
   }),
   (req, res) =>
-    user.authUser(req.body.email, req.body.password)
+    user.generateToken(req.body.email, req.body.password)
       .then(result => res.send(result))
       .catch(err => res.status(400).send(err))
 );

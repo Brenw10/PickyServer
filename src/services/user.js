@@ -7,7 +7,7 @@ function create(data) {
   return user.create(data);
 }
 
-async function authUser(email, password) {
+async function generateToken(email, password) {
   const currentUser = await user.findOne({ email });
   const hashing = hash.encrypt(METHOD.SHA_256, password);
   if (!currentUser || currentUser?.password !== hashing) return Promise.reject('Invalid User Information');
@@ -25,6 +25,6 @@ function getByToken(token) {
 
 module.exports = {
   create,
-  authUser,
+  generateToken,
   getByToken,
 };

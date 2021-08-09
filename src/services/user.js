@@ -17,7 +17,7 @@ async function generateToken(email, password) {
 function getByToken(token) {
   try {
     const { _id } = jwt.verify(token, process.env.TOKEN_KEY);
-    return user.findOne({ _id });
+    return user.findOne({ _id }).populate('store', '-products');
   } catch {
     return Promise.reject('Invalid User Information');
   }

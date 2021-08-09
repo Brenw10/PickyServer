@@ -1,6 +1,8 @@
 const express = require('express');
 const store = require('../services/store');
 const product = require('../services/product');
+const auth = require('../middleware/auth');
+const storePermission = require('../middleware/store');
 const { celebrate, Joi, errors, Segments } = require('celebrate');
 
 const router = express.Router();
@@ -33,6 +35,7 @@ router.post('/store/:_id/product',
       category: Joi.string().required(),
     }),
   }),
+  auth, storePermission,
   (req, res) =>
     product.create(req.params._id, req.body)
       .then(result => res.send(result))

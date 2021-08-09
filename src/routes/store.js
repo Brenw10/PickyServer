@@ -7,12 +7,34 @@ const router = express.Router();
 
 router.get('/store/:_id/product/search',
   celebrate({
+    [Segments.PARAMS]: Joi.object({
+      _id: Joi.string().required(),
+    }),
     [Segments.QUERY]: Joi.object({
       'products.name': Joi.string().empty(''),
     }),
   }),
   (req, res) =>
     product.searchByStore(req.params._id, req.query)
+      .then(result => res.send(result))
+      .catch(err => res.status(400).send(err))
+);
+
+router.post('/store/:_id/product',
+  celebrate({
+    [Segments.PARAMS]: Joi.object({
+      _id: Joi.string().required(),
+    }),
+    [Segments.BODY]: Joi.object({
+      name: Joi.string().required(),
+      price: Joi.number().required(),
+      image: Joi.string().required(),
+      quantity: Joi.number().required(),
+      category: Joi.string().required(),
+    }),
+  }),
+  (req, res) =>
+    product.create(req.params._id, req.body)
       .then(result => res.send(result))
       .catch(err => res.status(400).send(err))
 );

@@ -23,7 +23,12 @@ function searchByCategory(category, query) {
   ]);
 }
 
+function create(_id, product) {
+  return store.updateOne({ _id }, { $push: { products: product } });
+}
+
 module.exports = {
   searchByStore,
   searchByCategory,
+  create,
 };

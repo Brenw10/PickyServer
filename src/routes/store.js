@@ -42,6 +42,23 @@ router.post('/store/:_id/product',
       .catch(err => res.status(400).send(err))
 );
 
+router.put('/store/:_id/product/:product',
+  celebrate({
+    [Segments.PARAMS]: Joi.object({
+      _id: Joi.string().required(),
+      product: Joi.string().required(),
+    }),
+    [Segments.BODY]: Joi.object({
+      quantity: Joi.number().required(),
+    }),
+  }),
+  auth, storePermission,
+  (req, res) =>
+    product.update(req.params._id, req.params.product, req.body)
+      .then(result => res.send(result))
+      .catch(err => res.status(400).send(err))
+);
+
 router.get('/store/search',
   celebrate({
     [Segments.QUERY]: Joi.object({

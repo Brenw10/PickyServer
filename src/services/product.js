@@ -27,8 +27,16 @@ function create(_id, product) {
   return store.updateOne({ _id }, { $push: { products: product } });
 }
 
+function update(_id, productId, { quantity }) {
+  return store.updateOne(
+    { _id, 'products._id': productId },
+    { $set: { 'products.$.quantity': quantity } },
+  );
+}
+
 module.exports = {
   searchByStore,
   searchByCategory,
   create,
+  update,
 };

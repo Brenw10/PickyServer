@@ -4,8 +4,14 @@ function search(data) {
   const query = {
     ...data,
     name: { $regex: data.name || '', $options: 'i' },
+    'products.quantity': { $gte: data['products.quantity'] },
   };
-  return store.find(query).select('-products');
+  return store.aggregate([
+    { $unwind: '$products' },
+    { $match: query },
+    { $group: { _id: '$_id', doc: { $first: "$$ROOT" }, 'products': { $push: '$products' } } },
+    { $replaceRoot: { newRoot: { $mergeObjects: ['$doc', { products: '$products' }] } } },
+  ]);
 }
 
 function get(_id) {

@@ -1,5 +1,6 @@
 const store = require('../models/store');
 const mongoose = require('mongoose');
+const file = require('../services/file');
 
 function searchByStore(_id, data) {
   const query = {
@@ -31,7 +32,11 @@ function searchByCategory(category, data) {
   ]);
 }
 
-function create(_id, product) {
+async function create(_id, data) {
+  const product = {
+    ...data,
+    image: await file.saveBase64Image(data.image),
+  };
   return store.updateOne({ _id }, { $push: { products: product } });
 }
 

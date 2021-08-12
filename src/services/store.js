@@ -1,8 +1,11 @@
 const store = require('../models/store');
 
-function search(query) {
-  query = { ...query, name: { $regex: query.name || '', $options: 'i' } };
-  return store.find(query);
+function search(data) {
+  const query = {
+    ...data,
+    name: { $regex: data.name || '', $options: 'i' }
+  };
+  return store.find(query).select('-products');
 }
 
 function get(_id) {

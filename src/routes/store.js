@@ -1,6 +1,5 @@
 const express = require('express');
 const store = require('../services/store');
-const storePermission = require('../middleware/store');
 const { celebrate, Joi, errors, Segments } = require('celebrate');
 
 const router = express.Router();

@@ -3,7 +3,7 @@ const store = require('../models/store');
 function search(data) {
   const query = {
     ...data,
-    name: { $regex: data.name || '', $options: 'i' }
+    name: { $regex: data.name || '', $options: 'i' },
   };
   return store.find(query).select('-products');
 }

@@ -1,22 +1,30 @@
 const store = require('../models/store');
 const mongoose = require('mongoose');
 
-function searchByStore(_id, query) {
-  query = { ...query, 'products.name': { $regex: query['products.name'] || '', $options: 'i' } };
+function searchByStore(_id, data) {
+  const query = {
+    ...data,
+    'products.name': { $regex: data['products.name'] || '', $options: 'i' },
+    'products.quantity': { $gte: data['products.quantity'] },
+  };
   return store.aggregate([
     { $unwind: '$products' },
-    { $match: { _id: mongoose.Types.ObjectId(_id), 'products.quantity': { $gte: 1 } } },
+    { $match: { _id: mongoose.Types.ObjectId(_id) } },
     { $match: query },
     { $replaceRoot: { newRoot: { $mergeObjects: ['$products', { store: '$$ROOT' }] } } },
     { $project: { 'store.products': 0 } },
   ]);
 }
 
-function searchByCategory(category, query) {
-  query = { ...query, 'products.name': { $regex: query['products.name'] || '', $options: 'i' } };
+function searchByCategory(category, data) {
+  const query = {
+    ...data,
+    'products.name': { $regex: data['products.name'] || '', $options: 'i' },
+    'products.quantity': { $gte: data['products.quantity'] },
+  };
   return store.aggregate([
     { $unwind: '$products' },
-    { $match: { 'products.category': mongoose.Types.ObjectId(category), 'products.quantity': { $gte: 1 } } },
+    { $match: { 'products.category': mongoose.Types.ObjectId(category) } },
     { $match: query },
     { $replaceRoot: { newRoot: { $mergeObjects: ['$products', { store: '$$ROOT' }] } } },
     { $project: { 'store.products': 0 } },

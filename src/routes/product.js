@@ -12,6 +12,7 @@ router.get('/product/category/:category/search',
     [Segments.QUERY]: Joi.object({
       city: Joi.string().empty(''),
       'products.name': Joi.string().empty(''),
+      'products.quantity': Joi.number().default(0),
     }),
   }),
   (req, res) =>

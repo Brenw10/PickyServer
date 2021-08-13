@@ -8,6 +8,7 @@ function search(data) {
     _id: data._id ? mongoose.Types.ObjectId(data._id) : mongoose.Types.ObjectId,
     'products.name': { $regex: data['products.name'] || '', $options: 'i' },
     'products.quantity': { $gte: data['products.quantity'] },
+    'products.category': data['products.category'] ? mongoose.Types.ObjectId(data['products.category']) : mongoose.Types.ObjectId,
   };
   return store.aggregate([
     { $unwind: '$products' },

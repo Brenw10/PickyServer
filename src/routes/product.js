@@ -13,7 +13,7 @@ router.get('/product/search',
       city: Joi.string().empty(''),
       'products.name': Joi.string().empty(''),
       'products.quantity': Joi.number().default(0).empty(''),
-      category: Joi.string().empty(''),
+      'products.category': Joi.string().empty(''),
     }),
   }),
   (req, res) =>

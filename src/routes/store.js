@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/store/search',
   celebrate({
     [Segments.QUERY]: Joi.object({
-      name: Joi.string().empty(''),
+      name: Joi.string(),
       city: Joi.string(),
       'products.quantity': Joi.number().default(0),
     }),

@@ -6,35 +6,18 @@ const { celebrate, Joi, errors, Segments } = require('celebrate');
 
 const router = express.Router();
 
-router.get('/product/category/:category/search',
+router.get('/product/search',
   celebrate({
-    [Segments.PARAMS]: Joi.object({
-      category: Joi.string().required(),
-    }),
     [Segments.QUERY]: Joi.object({
-      city: Joi.string().empty(''),
-      'products.name': Joi.string().empty(''),
+      _id: Joi.string(),
+      city: Joi.string(),
+      'products.name': Joi.string(),
       'products.quantity': Joi.number().default(0),
+      category: Joi.string(),
     }),
   }),
   (req, res) =>
-    product.searchByCategory(req.params.category, req.query)
-      .then(result => res.send(result))
-      .catch(err => res.status(400).send(err))
-);
-
-router.get('/store/:_id/product/search',
-  celebrate({
-    [Segments.PARAMS]: Joi.object({
-      _id: Joi.string().required(),
-    }),
-    [Segments.QUERY]: Joi.object({
-      'products.name': Joi.string().empty(''),
-      'products.quantity': Joi.number().default(0),
-    }),
-  }),
-  (req, res) =>
-    product.searchByStore(req.params._id, req.query)
+    product.search(req.query)
       .then(result => res.send(result))
       .catch(err => res.status(400).send(err))
 );

@@ -2,30 +2,15 @@ const store = require('../models/store');
 const mongoose = require('mongoose');
 const file = require('../services/file');
 
-function searchByStore(_id, data) {
+function search(data) {
   const query = {
     ...data,
+    _id: data._id ? mongoose.Types.ObjectId(data._id) : mongoose.Types.ObjectId,
     'products.name': { $regex: data['products.name'] || '', $options: 'i' },
     'products.quantity': { $gte: data['products.quantity'] },
   };
   return store.aggregate([
     { $unwind: '$products' },
-    { $match: { _id: mongoose.Types.ObjectId(_id) } },
-    { $match: query },
-    { $replaceRoot: { newRoot: { $mergeObjects: ['$products', { store: '$$ROOT' }] } } },
-    { $project: { 'store.products': 0 } },
-  ]);
-}
-
-function searchByCategory(category, data) {
-  const query = {
-    ...data,
-    'products.name': { $regex: data['products.name'] || '', $options: 'i' },
-    'products.quantity': { $gte: data['products.quantity'] },
-  };
-  return store.aggregate([
-    { $unwind: '$products' },
-    { $match: { 'products.category': mongoose.Types.ObjectId(category) } },
     { $match: query },
     { $replaceRoot: { newRoot: { $mergeObjects: ['$products', { store: '$$ROOT' }] } } },
     { $project: { 'store.products': 0 } },
@@ -33,11 +18,11 @@ function searchByCategory(category, data) {
 }
 
 async function create(_id, data) {
-  const product = {
+  const products = {
     ...data,
     image: await file.saveBase64Image(data.image),
   };
-  return store.updateOne({ _id }, { $push: { products: product } });
+  return store.updateOne({ _id }, { $push: { products } });
 }
 
 function update(_id, productId, { quantity }) {
@@ -48,8 +33,7 @@ function update(_id, productId, { quantity }) {
 }
 
 module.exports = {
-  searchByStore,
-  searchByCategory,
+  search,
   create,
   update,
 };

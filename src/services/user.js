@@ -10,7 +10,7 @@ function create(data) {
 async function generateToken(email, password) {
   const currentUser = await user.findOne({ email });
   const hashing = hash.encrypt(METHOD.SHA_256, password);
-  if (!currentUser || currentUser?.password !== hashing) return Promise.reject('Invalid User Information');
+  if (!currentUser || currentUser.password !== hashing) return Promise.reject('Invalid User Information');
   return jwt.sign({ _id: currentUser._id }, process.env.TOKEN_KEY, { expiresIn: process.env.TOKEN_EXPIRE });
 }
 

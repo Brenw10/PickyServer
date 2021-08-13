@@ -20,7 +20,7 @@ function search(data) {
 async function create(_id, data) {
   const products = {
     ...data,
-    image: await file.saveBase64Image(data.image),
+    image: await file.getBase64ImageSaved(data.image),
   };
   return store.updateOne({ _id }, { $push: { products } });
 }

@@ -5,7 +5,7 @@ const FOLDER = {
   IMAGE: 'public/images/',
 };
 
-async function saveBase64Image(base64) {
+async function getBase64ImageSaved(base64) {
   const filepath = FOLDER.IMAGE + uuidv4() + '.png';
   await fs.mkdir(FOLDER.IMAGE, { recursive: true });
   await fs.writeFile(filepath, base64, { encoding: 'base64' });
@@ -13,5 +13,5 @@ async function saveBase64Image(base64) {
 }
 
 module.exports = {
-  saveBase64Image,
+  getBase64ImageSaved,
 };

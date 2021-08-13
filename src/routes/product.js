@@ -9,11 +9,11 @@ const router = express.Router();
 router.get('/product/search',
   celebrate({
     [Segments.QUERY]: Joi.object({
-      _id: Joi.string(),
-      city: Joi.string(),
-      'products.name': Joi.string(),
-      'products.quantity': Joi.number().default(0),
-      category: Joi.string(),
+      _id: Joi.string().empty(''),
+      city: Joi.string().empty(''),
+      'products.name': Joi.string().empty(''),
+      'products.quantity': Joi.number().default(0).empty(''),
+      category: Joi.string().empty(''),
     }),
   }),
   (req, res) =>

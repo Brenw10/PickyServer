@@ -2,7 +2,8 @@
   "name": "pickyserver",
   "version": "1.0.0",
   "scripts": {
-    "dev": "npx nodemon index.js"
+    "dev": "npx nodemon index.js",
+    "start": "node index.js"
   },
   "main": "index.js",
   "author": "Brendon Mota",
@@ -16,5 +17,6 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.3",
     "uuid": "^8.3.2"
-  }
+  },
+  "license": "ISC"
 }

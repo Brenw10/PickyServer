@@ -17,6 +17,7 @@ services:
     environment:
       - WAIT_HOSTS=mongodb:${MONGO_PORT}
       - CHOKIDAR_USEPOLLING=true
+    entrypoint: /home/app/entrypoint.sh ${ENV}
   mongodb:
     container_name: picky_mongodb
     image: mongo

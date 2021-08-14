@@ -4,11 +4,20 @@ const hash = require('../services/hash');
 const { METHOD } = require('../services/hash');
 
 function create(data) {
-  return user.create(data);
+  const query = {
+    ...data,
+    password: hash.encrypt(METHOD.SHA_256, data.password),
+    email: data.email.toLowerCase(),
+  };
+  return user.create(query);
+}
+
+function getUserByEmail(email) {
+  return user.findOne({ email: email.toLowerCase() });
 }
 
 async function generateToken(email, password) {
-  const currentUser = await user.findOne({ email });
+  const currentUser = await getUserByEmail(email);
   const hashing = hash.encrypt(METHOD.SHA_256, password);
   if (!currentUser || currentUser.password !== hashing) return Promise.reject('Invalid User Information');
   return jwt.sign({ _id: currentUser._id }, process.env.TOKEN_KEY, { expiresIn: process.env.TOKEN_EXPIRE });

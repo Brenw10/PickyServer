@@ -1,9 +1,9 @@
 const store = require('../models/store');
 
-function search(data) {
+function search({ name, city }) {
   const query = {
-    ...data,
-    name: { $regex: data.name || '', $options: 'i' },
+    name: { $regex: name || '', $options: 'i' },
+    city: city || String,
   };
   return store.aggregate([
     { $unwind: '$products' },

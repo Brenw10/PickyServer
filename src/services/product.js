@@ -26,15 +26,12 @@ async function create(_id, data) {
   return store.updateOne({ _id }, { $push: { products } });
 }
 
-function update(_id, productId, { quantity }) {
-  return store.updateOne(
-    { _id, 'products._id': productId },
-    { $set: { 'products.$.quantity': quantity } },
-  );
+function remove(_store, _product) {
+  return store.updateOne({ _id: _store }, { $pull: { 'products': { _id: _product } } });
 }
 
 module.exports = {
   search,
   create,
-  update,
+  remove,
 };

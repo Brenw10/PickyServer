@@ -42,19 +42,16 @@ router.post('/store/:_id/product',
       .catch(err => res.status(400).send(err))
 );
 
-router.put('/store/:_id/product/:product',
+router.delete('/store/:_store/product/:_product',
   celebrate({
     [Segments.PARAMS]: Joi.object({
-      _id: Joi.string().required(),
-      product: Joi.string().required(),
-    }),
-    [Segments.BODY]: Joi.object({
-      quantity: Joi.number().required(),
+      _store: Joi.string().required(),
+      _product: Joi.string().required(),
     }),
   }),
-  auth, isAllowedUserStore('_id'),
+  auth, isAllowedUserStore('_store'),
   (req, res) =>
-    product.update(req.params._id, req.params.product, req.body)
+    product.remove(req.params._store, req.params._product)
       .then(result => res.send(result))
       .catch(err => res.status(400).send(err))
 );

@@ -9,7 +9,6 @@ router.get('/store/search',
     [Segments.QUERY]: Joi.object({
       name: Joi.string().empty(''),
       city: Joi.string().empty(''),
-      'products.quantity': Joi.number().default(0).empty(''),
     }),
   }),
   (req, res) =>

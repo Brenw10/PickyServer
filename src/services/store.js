@@ -4,7 +4,6 @@ function search(data) {
   const query = {
     ...data,
     name: { $regex: data.name || '', $options: 'i' },
-    'products.quantity': { $gte: data['products.quantity'] },
   };
   return store.aggregate([
     { $unwind: '$products' },

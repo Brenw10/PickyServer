@@ -22,10 +22,10 @@ router.get('/product/search',
       .catch(err => res.status(400).send(err))
 );
 
-router.post('/store/:_id/product',
+router.post('/store/:_store/product',
   celebrate({
     [Segments.PARAMS]: Joi.object({
-      _id: Joi.string().required(),
+      _store: Joi.string().required(),
     }),
     [Segments.BODY]: Joi.object({
       name: Joi.string().required(),
@@ -35,9 +35,9 @@ router.post('/store/:_id/product',
       category: Joi.string().required(),
     }),
   }),
-  auth, isAllowedUserStore('_id'),
+  auth, isAllowedUserStore('_store'),
   (req, res) =>
-    product.create(req.params._id, req.body)
+    product.create(req.params._store, req.body)
       .then(result => res.send(result))
       .catch(err => res.status(400).send(err))
 );

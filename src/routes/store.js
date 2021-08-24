@@ -18,14 +18,14 @@ router.get('/store/search',
       .catch(err => res.status(400).send(err))
 );
 
-router.get('/store/:_id',
+router.get('/store/:_store',
   celebrate({
     [Segments.PARAMS]: Joi.object({
-      _id: Joi.string().required(),
+      _store: Joi.string().required(),
     }),
   }),
   (req, res) =>
-    store.get(req.params._id)
+    store.get(req.params._store)
       .then(result => res.send(result))
       .catch(err => res.status(400).send(err))
 );

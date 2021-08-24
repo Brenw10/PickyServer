@@ -14,8 +14,8 @@ function search(data) {
   ]);
 }
 
-function get(_id) {
-  return store.findOne({ _id });
+function get(_store) {
+  return store.findOne({ _id: _store });
 }
 
 function getDistinctCity() {

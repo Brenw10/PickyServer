@@ -18,12 +18,12 @@ function search(data) {
   ]);
 }
 
-async function create(_id, data) {
-  const products = {
+async function create(_store, data) {
+  const product = {
     ...data,
     image: await file.getBase64ImageSaved(data.image),
   };
-  return store.updateOne({ _id }, { $push: { products } });
+  return store.updateOne({ _id: _store }, { $push: { products: product } });
 }
 
 function remove(_store, _product) {

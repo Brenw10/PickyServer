@@ -2,12 +2,12 @@ const store = require('../models/store');
 const mongoose = require('mongoose');
 const file = require('../services/file');
 
-function search(data) {
+function search({ _store, name, city, category }) {
   const query = {
-    ...data,
-    _id: data._id ? mongoose.Types.ObjectId(data._id) : mongoose.Types.ObjectId,
-    'products.name': { $regex: data['products.name'] || '', $options: 'i' },
-    'products.category': data['products.category'] ? mongoose.Types.ObjectId(data['products.category']) : mongoose.Types.ObjectId,
+    _id: _store ? mongoose.Types.ObjectId(_store) : mongoose.Types.ObjectId,
+    city: city || String,
+    'products.name': { $regex: name || '', $options: 'i' },
+    'products.category': category ? mongoose.Types.ObjectId(category) : mongoose.Types.ObjectId,
   };
   return store.aggregate([
     { $unwind: '$products' },

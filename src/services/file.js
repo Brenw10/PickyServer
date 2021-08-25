@@ -16,7 +16,7 @@ async function remove(filepath, ignoreError = true) {
   try {
     return await fs.promises.unlink(filepath);
   } catch (err) {
-    if (!ignoreError) throw err;
+    if (!ignoreError) return Promise.reject(err);
   }
 }
 

@@ -40,7 +40,7 @@ function search({ email }) {
   const query = {
     email: { $regex: email || '', $options: 'i' },
   };
-  return user.find(query);
+  return user.find(query).populate('store', '-products');
 }
 
 module.exports = {

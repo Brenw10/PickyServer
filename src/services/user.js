@@ -32,8 +32,13 @@ function getByToken(token) {
   }
 }
 
+function setStore(_user, _store) {
+  return user.findOneAndUpdate({ _id: _user }, { $set: { store: _store } }, { new: true });
+}
+
 module.exports = {
   create,
   generateToken,
   getByToken,
+  setStore,
 };

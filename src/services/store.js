@@ -24,8 +24,13 @@ function getDistinctCity() {
   ]);
 }
 
+function create(data) {
+  return store.create(data);
+}
+
 module.exports = {
   get,
   getDistinctCity,
   search,
+  create,
 };

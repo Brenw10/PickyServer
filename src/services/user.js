@@ -36,9 +36,17 @@ function setStore(_user, _store) {
   return user.findOneAndUpdate({ _id: _user }, { $set: { store: _store } }, { new: true });
 }
 
+function search({ email }) {
+  const query = {
+    email: { $regex: email || '', $options: 'i' },
+  };
+  return user.find(query);
+}
+
 module.exports = {
   create,
   generateToken,
   getByToken,
   setStore,
+  search,
 };

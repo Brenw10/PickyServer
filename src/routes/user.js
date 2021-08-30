@@ -6,6 +6,19 @@ const { celebrate, Joi, errors, Segments } = require('celebrate');
 
 const router = express.Router();
 
+router.get('/user/search',
+  celebrate({
+    [Segments.QUERY]: Joi.object({
+      email: Joi.string().empty(''),
+    }),
+  }),
+  auth, isAdmin,
+  (req, res) =>
+    user.search(req.query)
+      .then(result => res.send(result))
+      .catch(err => res.status(400).send(err))
+);
+
 router.post('/user',
   celebrate({
     [Segments.BODY]: Joi.object({

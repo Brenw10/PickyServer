@@ -1,13 +1,15 @@
 const store = require('../models/store');
 
-function search({ name, city }) {
-  const query = {
-    name: { $regex: name || '', $options: 'i' },
-    city: city || String,
-  };
+function search({ name, city, minProducts }) {
   return store.aggregate([
-    { $unwind: '$products' },
-    { $match: query },
+    { $match: minProducts > 0 ? { [`products.${minProducts - 1}`]: { $exists: true } } : {} },
+    { $unwind: { path: "$products", preserveNullAndEmptyArrays: true } },
+    {
+      $match: {
+        name: { $regex: name || '', $options: 'i' },
+        city: city || String,
+      }
+    },
     { $group: { _id: '$_id', doc: { $first: "$$ROOT" }, 'products': { $push: '$products' } } },
     { $replaceRoot: { newRoot: { $mergeObjects: ['$doc', { products: '$products' }] } } },
   ]);

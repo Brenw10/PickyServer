@@ -39,7 +39,7 @@ router.post('/user/:_user/store',
       _user: Joi.string().required(),
     }),
     [Segments.BODY]: Joi.object({
-      _store: Joi.string().required(),
+      _store: Joi.string().allow(null),
     }),
   }),
   auth, isAdmin,
